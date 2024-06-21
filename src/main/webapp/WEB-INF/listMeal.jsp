@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: P42
-  Date: 20.06.2024
-  Time: 18:53
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page import="ru.javawebinar.topjava.util.TimeUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

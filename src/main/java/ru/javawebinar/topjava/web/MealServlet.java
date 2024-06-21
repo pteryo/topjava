@@ -2,7 +2,7 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.storage.MealStorage;
+import ru.javawebinar.topjava.storage.RamStorage;
 import ru.javawebinar.topjava.storage.Storage;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.util.TimeUtil;
@@ -28,7 +28,7 @@ public class MealServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        storage = new MealStorage();
+        storage = new RamStorage();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String forward = "";
-        String action = (request.getParameter("action") == null ? "" : request.getParameter("action"));
+        String action = request.getParameter("action") == null ? "" : request.getParameter("action");
         String id = request.getParameter("id");
         log.info("MealServlet doGet action = {}, id = {}", action, id);
 
