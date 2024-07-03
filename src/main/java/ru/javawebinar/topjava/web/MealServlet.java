@@ -2,7 +2,7 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.storage.RamStorage;
+import ru.javawebinar.topjava.storage.RamMealStorage;
 import ru.javawebinar.topjava.storage.Storage;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.util.TimeUtil;
@@ -28,7 +28,7 @@ public class MealServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        storage = new RamStorage();
+        storage = new RamMealStorage();
     }
 
     @Override

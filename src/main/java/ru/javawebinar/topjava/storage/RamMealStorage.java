@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class RamStorage implements Storage<Meal> {
+public class RamMealStorage implements Storage<Meal> {
     private final Map<Integer, Meal> mealStorage = new ConcurrentHashMap<>();
     private final AtomicInteger mealId = new AtomicInteger(0);
 
