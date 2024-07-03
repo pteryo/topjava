@@ -26,34 +26,40 @@ public class MealRestController {
     private MealService service;
 
     public List<MealTo> getAll() {
-        log.info("getAll for userId {}", authUserId());
-        return getAllFiltered(null, null, null, null);
+        int authUserId = authUserId();
+        log.info("getAll for userId {}", authUserId);
+        return  MealsUtil.getTos(service.getAll(authUserId), authUserCaloriesPerDay());
     }
 
     public List<MealTo> getAllFiltered(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime) {
-        log.info("getAll for userId {}", authUserId());
-        return MealsUtil.getTosFiltered(service.getFiltered(authUserId(), startDate, endDate), authUserCaloriesPerDay(), startTime, endTime);
+        int authUserId = authUserId();
+        log.info("getFiltered for userId {} from {} to {}", authUserId, startDate, endDate);
+        return MealsUtil.getTosFiltered(service.getFiltered(authUserId, startDate, endDate), authUserCaloriesPerDay(), startTime, endTime);
     }
 
     public Meal get(int id) {
-        log.info("get {} for userId {}", id, authUserId());
-        return service.get(id, authUserId());
+        int authUserId = authUserId();
+        log.info("get {} for userId {}", id, authUserId);
+        return service.get(id, authUserId);
     }
 
     public Meal create(Meal meal) {
-        log.info("create {} for userId {}", meal, authUserId());
+        int authUserId = authUserId();
+        log.info("create {} for userId {}", meal, authUserId);
         checkNew(meal);
-        return service.create(meal, authUserId());
+        return service.create(meal, authUserId);
     }
 
     public void delete(int id) {
-        log.info("delete {} for userId {}", id, authUserId());
-        service.delete(id, authUserId());
+        int authUserId = authUserId();
+        log.info("delete {} for userId {}", id, authUserId);
+        service.delete(id, authUserId);
     }
 
     public Meal update(Meal meal, int id) {
-        log.info("update {} with id={} for userId {}", meal, id, authUserId());
+        int authUserId = authUserId();
+        log.info("update {} with id={} for userId {}", meal, id, authUserId);
         assureIdConsistent(meal, id);
-        return service.update(meal, authUserId());
+        return service.update(meal, authUserId);
     }
 }

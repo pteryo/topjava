@@ -34,7 +34,7 @@ public class MealsUtil {
     );
 
     public static List<MealTo> getTos(Collection<Meal> meals, int caloriesPerDay) {
-        return filterByPredicate(meals, caloriesPerDay, meal -> true);
+        return  filterByPredicate(meals, caloriesPerDay, meal -> true);
     }
 
     public static List<MealTo> getTosFiltered(Collection<Meal> meals, int caloriesPerDay, LocalTime startTime, LocalTime endTime) {
@@ -45,7 +45,6 @@ public class MealsUtil {
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
                         Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
-//                      Collectors.toMap(Meal::getDate, Meal::getCalories, Integer::sum)
                 );
 
         return meals.stream()
