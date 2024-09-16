@@ -28,13 +28,7 @@ $(function () {
             "info": true,
             "columns": [
                 {
-                    "data": "dateTime",
-                    "render": function (date, type, row) {
-                        if (type === "display") {
-                            return date.replaceAll("T", " ").substring(0, 16);
-                        }
-                        return date;
-                    },
+                    "data": "dateTime"
                 },
                 {
                     "data": "description"
@@ -58,14 +52,7 @@ $(function () {
                     0,
                     "desc"
                 ]
-            ],
-            "createdRow": function (row, data, dataIndex) {
-                if (data.excess) {
-                    $(row).css("color", "red");
-                } else {
-                    $(row).css("color", "green");
-                }
-            }
+            ]
         })
     );
 });
