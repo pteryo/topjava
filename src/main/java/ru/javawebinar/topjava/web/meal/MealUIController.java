@@ -56,20 +56,6 @@ public class MealUIController extends AbstractMealController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<String> createOrUpdate(@Valid Meal meal, BindingResult result) {
-        if (result.hasErrors()) {
-            return ValidationUtil.createErrorFieldsMsg(result);
-        }
-        if (meal.isNew()) {
-            super.create(meal);
-        } else {
-            super.update(meal, meal.id());
-        }
-        return ResponseEntity.ok().build();
-    }
-
     @Override
     @GetMapping("/filter")
     public List<MealTo> getBetween(
