@@ -1,5 +1,15 @@
 const mealAjaxUrl = "profile/meals/";
-
+$.ajaxSetup({
+    converters: {
+        "text json": function (stringData) {
+            return JSON.parse(stringData,
+                function (key, value) {
+                    return (key === 'dateTime') ? value.substring(0, 16).replace('T', ' ') : value;
+                }
+            );
+        }
+    }
+});
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {
     ajaxUrl: mealAjaxUrl,
@@ -37,22 +47,20 @@ $(function () {
                     "data": "calories"
                 },
                 {
-                    "defaultContent": "",
                     "orderable": false,
+                    "defaultContent": "",
                     "render": renderEditBtn
                 },
                 {
-                    "defaultContent": "",
                     "orderable": false,
+                    "defaultContent": "",
                     "render": renderDeleteBtn
                 }
             ],
-            "order": [
-                [
-                    0,
-                    "desc"
-                ]
-            ]
+            "order": [],
+            "createdRow": function (row, data, dataIndex) {
+                $(row).attr("data-meal-excess", data.excess);
+            }
         })
     );
 });

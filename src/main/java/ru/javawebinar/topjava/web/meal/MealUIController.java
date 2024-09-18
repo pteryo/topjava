@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.web.meal;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +14,15 @@ import ru.javawebinar.topjava.util.ValidationUtil;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/profile/meals", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MealUIController extends AbstractMealController {
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Override
     @GetMapping
@@ -41,11 +44,16 @@ public class MealUIController extends AbstractMealController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void create(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
-                       @RequestParam String description,
-                       @RequestParam int calories) {
-        super.create(new Meal(null, dateTime, description, calories));
+    public ResponseEntity<String> createOrUpdate(@Valid Meal meal, BindingResult result) {
+        if (result.hasErrors()) {
+            return ValidationUtil.collectErrors(result, messageSource);
+        }
+        if (meal.isNew()) {
+            super.create(meal);
+        } else {
+            super.update(meal, meal.id());
+        }
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping

@@ -1,6 +1,8 @@
 package ru.javawebinar.topjava.util;
 
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -76,9 +78,9 @@ public class ValidationUtil {
         return rootCause != null ? rootCause : t;
     }
 
-    public static ResponseEntity<String> createErrorFieldsMsg(BindingResult result) {
+    public static ResponseEntity<String> collectErrors(BindingResult result, MessageSource messageSource) {
         String errorFieldsMsg = result.getFieldErrors().stream()
-                .map(fe -> String.format("[%s] %s", fe.getField(), fe.getDefaultMessage()))
+                .map(fe -> String.format("[%s] %s", fe.getField(), messageSource.getMessage(fe, LocaleContextHolder.getLocale())))
                 .collect(Collectors.joining("<br>"));
         return ResponseEntity.unprocessableEntity().body(errorFieldsMsg);
     }
